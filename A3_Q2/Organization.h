@@ -19,6 +19,7 @@ public:
     Organization();
     Organization(string newName);
     Organization(const Organization& copyThisOrg);
+    Organization& operator=(const Organization& copyThisOrg);
     virtual ~Organization();
     string getMemberNames();
     void addPerson(Person newPerson);

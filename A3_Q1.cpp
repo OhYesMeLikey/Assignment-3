@@ -46,7 +46,7 @@ public:
     ~Organization()
     {
         delete[] members;
-        members = nullptr;
+        //members = nullptr;
     }
 
     string getMemberNames()

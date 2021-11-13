@@ -4,39 +4,14 @@
 #include "university.h"
 
 //Start of the implementation of Person
-Person::Person()
-{
-    name = "Simp";
-    age = 69;
-    maxOrgs = 5;
-    numOfOrgsJoined = 0;
-    orgs = new Organization *[maxOrgs];
-}
+Person::Person() : name{"Simp"}, age{69}, maxOrgs{5}, numOfOrgsJoined{0}, orgs{new Organization *[maxOrgs]} {}
 
-Person::Person(std::string newName)
-{
-    name = newName;
-    age = 69;
-    maxOrgs = 5;
-    numOfOrgsJoined = 0;
-    orgs = new Organization *[maxOrgs];
-}
+Person::Person(std::string newName) : name{newName}, age{69}, maxOrgs{5}, numOfOrgsJoined{0}, orgs{new Organization *[maxOrgs]} {}
 
-Person::Person(std::string newName, int newAge)
-{
-    name = newName;
-    age = newAge;
-    maxOrgs = 5;
-    numOfOrgsJoined = 0;
-    orgs = new Organization *[maxOrgs];
-};
+Person::Person(std::string newName, int newAge) : name{newName}, age{newAge}, maxOrgs{5}, numOfOrgsJoined{0}, orgs{new Organization *[maxOrgs]} {}
 
 Person::~Person()
 {
-    if (orgs == nullptr)
-    {
-        return;
-    }
     for (int i = 0; i < maxOrgs; i++)
     {
         delete[] orgs[i];
@@ -45,22 +20,10 @@ Person::~Person()
     orgs = nullptr;
 }
 
-std::string Person::getName()
-{
-    return name;
-}
-int Person::getAge()
-{
-    return age;
-}
-int Person::getMaxOrgs()
-{
-    return maxOrgs;
-}
-int Person::getSize()
-{
-    return numOfOrgsJoined;
-}
+std::string Person::getName() { return name; }
+int Person::getAge() { return age; }
+int Person::getMaxOrgs() { return maxOrgs; }
+int Person::getSize() { return numOfOrgsJoined; }
 
 void Person::addOrganization(Organization *org)
 {
@@ -112,7 +75,6 @@ float Person::getTotalTuition()
     }
 
     float total = 0;
-
     University *uni;
 
     for (int i = 0; i < numOfOrgsJoined; i++)
@@ -164,20 +126,20 @@ std::string Person::printSchools()
 //
 //
 // Start of Organization implementation
-Organization::Organization()
-{
-    name = "Poki Simps";
-    size = 0;
-    dim = 100;
-    members = new Person[dim];
-}
+Organization::Organization() : name{"Poki Simps"}, members{new Person[100]}, size{0}, dim{100} {}
 
-Organization::Organization(std::string newName)
+Organization::Organization(std::string newName) : name{newName}, members{new Person[100]}, size{0}, dim{100} {}
+
+Organization::Organization(const Organization &copyThisOrg)
 {
-    name = newName;
-    size = 0;
-    dim = 100;
+    name = copyThisOrg.name;
+    size = copyThisOrg.size;
+    dim = copyThisOrg.dim;
     members = new Person[dim];
+    for (int i = 0; i < size; i++)
+    {
+        members[i] = copyThisOrg.members[i];
+    }
 }
 
 Organization &Organization::operator=(const Organization &copyThisOrg)
@@ -200,91 +162,55 @@ Organization &Organization::operator=(const Organization &copyThisOrg)
 
 Organization::~Organization()
 {
-    if (size == 0)
-    {
-        return;
-    }
-
     delete[] members;
-    members = nullptr;
 }
 
 string Organization::getMemberNames()
 {
     if (size == 0)
     {
-        return "There are no members in the organization.";
+        return "";
     }
 
-    string listOfMembers = "";
+    string everyMember{""};
     for (int i = 0; i < size; i++)
     {
         if (i + 1 == size)
         {
-            listOfMembers = listOfMembers + members[i].getName();
+            everyMember += members[i].getName();
         }
         else
         {
-            listOfMembers = listOfMembers + members[i].getName() + ", ";
+            everyMember += members[i].getName() + ";";
         }
     }
-    return listOfMembers;
-}
-
-Person *Organization::copyMembersWithExtraSlots()
-{
-    Person *temp = new Person[dim];
-
-    for (int i = 0; i < size; i++)
-    {
-        temp[i] = members[i];
-    }
-
-    return temp;
+    return everyMember;
 }
 
 void Organization::addPerson(Person person)
 {
-    /*
-    if (size == 0)
-    {
-        members = new Person[size + 1];
-        members[size++] = person;
-    }
-    else
-    {
-        if (size == dim)
-        {
-            dim *= 2;
-        }
-
-        Person *copiedMembers = copyMembersWithExtraSlot();
-        copiedMembers[size++] = person;
-        delete[] members;
-        members = copiedMembers;
-    }
-    */
-    if (size == 0)
-    {
-        members[size++] = person;
-    }
-    else if (size == dim)
+    if (size == dim)
     {
         dim *= 2;
+
+        Person *temp{new Person[dim]};
+        for (int i = 0; i < size; i++)
+        {
+            temp[i] = members[i];
+        }
+        temp[size++] = person;
+
+        delete[] members;
+        members = temp;
+        temp = nullptr;
     }
     else
     {
-        Person *copiedMembers = copyMembersWithExtraSlots();
-        copiedMembers[size++] = person;
-        delete[] members;
-        members = copiedMembers;
+        members[size++] = person;
     }
 }
 
-string Organization::getName()
-{
-    return name;
-}
+string Organization::getName() {return name;}
 // End of Organization implementation
 //
 //
@@ -296,29 +222,13 @@ string Organization::getName()
 //
 //
 // Start of University implementation
-University::University()
-{
-    tuition = 0;
-    name = "UniPokiSimp";
-    members = nullptr;
-    size = 0;
-    dim = 100;
-}
+University::University() : tuition {0} {}
 
-University::University(std::string newName) : Organization(newName)
-{
-    tuition = 0;
-}
+University::University(std::string newName) : Organization(newName), tuition {0} {}
 
-float University::getTuition()
-{
-    return tuition;
-}
+float University::getTuition() {return tuition;}
 
-void University::setTuition(float newTuition)
-{
-    tuition = newTuition;
-}
+void University::setTuition(float newTuition) {tuition = newTuition;}
 // End of University implementation
 
 //add a person to an organization and an organization to a person
