@@ -12,10 +12,12 @@ Person::Person(std::string newName, int newAge) : name{newName}, age{newAge}, ma
 
 Person::~Person()
 {
+    /*
     for (int i = 0; i < maxOrgs; i++)
     {
         delete[] orgs[i];
     }
+    */
     delete[] orgs;
     orgs = nullptr;
 }
@@ -259,7 +261,7 @@ int main()
     University *o6 = new University("UofO");
     University *o7 = new University("UofT");
 
-    cout << "Test" << endl;
+    //cout << "Test" << endl;
 
     o6->setTuition(10);
     o7->setTuition(30);
@@ -267,7 +269,7 @@ int main()
     Person *p1 = new Person("Amir");
     Person *p2 = new Person("John");
 
-    cout << "Before registering" << endl;
+    //cout << "Before registering" << endl;
     registering(o0, p1);
     registering(o1, p1);
     registering(o6, p1);
@@ -279,7 +281,7 @@ int main()
     registering(o6, p2);
     registering(o5, p2);
 
-    cout << "After registering" << endl;
+    //cout << "After registering" << endl;
 
     printMembers(*p1);
     cout << "Univeristy Organization: \n"
