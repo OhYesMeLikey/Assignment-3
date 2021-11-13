@@ -4,20 +4,26 @@
 #include "university.h"
 
 //Start of the implementation of Person
-Person::Person() : name{"Simp"}, age{69}, maxOrgs{5}, numOfOrgsJoined{0}, orgs{new Organization *[maxOrgs]} {}
+Person::Person() : name{"Simp"},
+                   age{69},
+                   maxOrgs{5},
+                   numOfOrgsJoined{0},
+                   orgs{new Organization *[maxOrgs]} {}
 
-Person::Person(std::string newName) : name{newName}, age{69}, maxOrgs{5}, numOfOrgsJoined{0}, orgs{new Organization *[maxOrgs]} {}
+Person::Person(std::string newName) : name{newName},
+                                      age{69},
+                                      maxOrgs{5},
+                                      numOfOrgsJoined{0},
+                                      orgs{new Organization *[maxOrgs]} {}
 
-Person::Person(std::string newName, int newAge) : name{newName}, age{newAge}, maxOrgs{5}, numOfOrgsJoined{0}, orgs{new Organization *[maxOrgs]} {}
+Person::Person(std::string newName, int newAge) : name{newName},
+                                                  age{newAge},
+                                                  maxOrgs{5},
+                                                  numOfOrgsJoined{0},
+                                                  orgs{new Organization *[maxOrgs]} {}
 
 Person::~Person()
 {
-    /*
-    for (int i = 0; i < maxOrgs; i++)
-    {
-        delete[] orgs[i];
-    }
-    */
     delete[] orgs;
     orgs = nullptr;
 }
@@ -108,14 +114,15 @@ std::string Person::printSchools()
         {
             if (i + 1 == numOfOrgsJoined)
             {
-                allSchools += (uni->getName());
+                allSchools += '<' + (*uni).getName() + " : " + to_string((*uni).getTuition()) + '>';
             }
             else
             {
-                allSchools += (uni->getName()) + ", ";
+                allSchools += '<' + (*uni).getName() + " : " + to_string((*uni).getTuition()) + '>' + " ";
             }
         }
     }
+    return allSchools;
 }
 // End of Person implementation
 //
@@ -212,7 +219,7 @@ void Organization::addPerson(Person person)
     }
 }
 
-string Organization::getName() {return name;}
+string Organization::getName() { return name; }
 // End of Organization implementation
 //
 //
@@ -224,13 +231,13 @@ string Organization::getName() {return name;}
 //
 //
 // Start of University implementation
-University::University() : tuition {0} {}
+University::University() : tuition{0} {}
 
-University::University(std::string newName) : Organization(newName), tuition {0} {}
+University::University(std::string newName) : Organization(newName), tuition{0} {}
 
-float University::getTuition() {return tuition;}
+float University::getTuition() { return tuition; }
 
-void University::setTuition(float newTuition) {tuition = newTuition;}
+void University::setTuition(float newTuition) { tuition = newTuition; }
 // End of University implementation
 
 //add a person to an organization and an organization to a person
