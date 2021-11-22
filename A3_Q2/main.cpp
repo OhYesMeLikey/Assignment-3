@@ -3,6 +3,7 @@
 #include "Organization.h"
 #include "university.h"
 
+/*
 //Start of the implementation of Person
 Person::Person() : name{"Simp"},
                    age{69},
@@ -125,6 +126,7 @@ std::string Person::printSchools()
     return allSchools;
 }
 // End of Person implementation
+*/
 //
 //
 //
@@ -134,6 +136,7 @@ std::string Person::printSchools()
 //
 //
 //
+/*
 // Start of Organization implementation
 Organization::Organization() : name{"Poki Simps"}, members{new Person[100]}, size{0}, dim{100} {}
 
@@ -220,7 +223,9 @@ void Organization::addPerson(Person person)
 }
 
 string Organization::getName() { return name; }
+
 // End of Organization implementation
+*/
 //
 //
 //
@@ -230,6 +235,7 @@ string Organization::getName() { return name; }
 //
 //
 //
+/*
 // Start of University implementation
 University::University() : tuition{0} {}
 
@@ -239,6 +245,7 @@ float University::getTuition() { return tuition; }
 
 void University::setTuition(float newTuition) { tuition = newTuition; }
 // End of University implementation
+*/
 
 //add a person to an organization and an organization to a person
 void registering(Organization *o, Person *p)
